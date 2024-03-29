@@ -1,40 +1,37 @@
-function catchError(fn, message){
-    try{
-        fn()
-    }catch(error){
-        console.log(message)
-    }
-}
 
-function audioRange(){
+function create_custom_audio_range(){
+    //========= global variables =========
     const audioFile = document.getElementById("audioFile")
-    if(!audioFile.duration){ return}
-    const durAud = document.getElementById("durAud")
-    const curTime = document.getElementById("curTime")
-    const rangeAudio = document.getElementById("customRangeAudio")
+    // if(!audioFile.duration){ return}
+    const durAudSpan = document.getElementById("durAud")
+    const curTimeSpan = document.getElementById("curTime")
+    const customRngAud = document.getElementById("customRangeAudio")
+    const iconPlay =document.getElementById("iconPlay")
     const dur = Math.floor(audioFile.duration)
+    customRngAud.max = dur
     let min = Math.floor(dur/60)
     let sec = dur % 60
-    rangeAudio.max = dur
-    function addZero(num) {if (num < 10){ num ="0"+ num; return num }else {return num}}
 
-    rangeAudio.oninput = ()=>{
-        let durRng = rangeAudio.value
+    //========= add zero to number if less than 10 =========
+    function addZero(num) {
+        if (num < 10){ num ="0"+ num; return num }
+        else {return num}
+    }
+
+    //========= on seeking custom input range: convert its value to duration time, and put it in a span =========
+    customRngAud.oninput = ()=>{
+        let durRng = customRngAud.value
         let min = Math.floor(durRng/60)
         let sec = durRng % 60
         audioFile.currentTime = durRng
-
-        curTime.innerHTML= `${addZero(min)}:${addZero(sec)}/`
+        curTimeSpan.innerHTML= `${addZero(min)}:${addZero(sec)}/`
         audioFile.play()
-
     }
-    curTime.innerHTML= `00:00 /`
-    durAud.innerHTML= `${addZero(min)}:${addZero(sec)}`
-    console.log(dur)
 
-    let iconPlay =document.getElementById("iconPlay")
+    durAudSpan.innerHTML= `${addZero(min)}:${addZero(sec)}`
+
+    //========= toggle play audio =========
     iconPlay.onclick = ()=>{
-        console.log(audioFile.paused )
         if (audioFile.paused === true) {
             audioFile.play()
             iconPlay.classList.add("fa-pause")
@@ -49,4 +46,6 @@ function audioRange(){
     }
 }
 
-window.onload=()=>{audioRange()}
+window.onload=()=>{
+    create_custom_audio_range()
+}
