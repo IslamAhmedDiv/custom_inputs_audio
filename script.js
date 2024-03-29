@@ -2,12 +2,15 @@
 function create_custom_audio_range(){
     //========= global variables =========
     const audioFile = document.getElementById("audioFile")
-    // if(!audioFile.duration){ return}
+    if(!audioFile.duration){ return}
     const durAudSpan = document.getElementById("durAud")
     const curTimeSpan = document.getElementById("curTime")
     const customRngAud = document.getElementById("customRangeAudio")
+    const customRangeVolume = document.getElementById("customRangeVolume")
     const iconPlay =document.getElementById("iconPlay")
+    const iconVolume =document.getElementById("iconVolume")
     const dur = Math.floor(audioFile.duration)
+
     customRngAud.max = dur
     function getTime(dur){
         let min = Math.floor(dur/60)
@@ -33,6 +36,13 @@ function create_custom_audio_range(){
         audioFile.currentTime = durRng
         curTimeSpan.innerHTML= putTimeHTML(durRng)
         audioFile.play()
+
+        if (customRngAud.value !== "0") {
+            audioFile.play()
+            iconPlay.classList.add("fa-pause")
+            iconPlay.classList.remove("fa-play")
+        }
+
     }
     durAudSpan.innerHTML= putTimeHTML(dur)
 
@@ -41,6 +51,40 @@ function create_custom_audio_range(){
         customRngAud.value = audioFile.currentTime
         curTimeSpan.innerHTML = putTimeHTML(customRngAud.value)
     }
+
+
+
+    // to muted sound
+    let volume = true
+    let volumeVal
+    iconVolume.onclick = ()=>{
+        if(volume === true){
+            iconVolume.classList.add("fa-volume-xmark")
+            iconVolume.classList.remove("fa-volume-high")
+            volumeVal = customRangeVolume.value
+            audioFile.volume = customRangeVolume.value = 0
+        }else{
+            iconVolume.classList.remove("fa-volume-xmark")
+            iconVolume.classList.add("fa-volume-high")
+            customRangeVolume.value = audioFile.volume = volumeVal
+        }
+        volume = !volume
+    }
+
+    // on seeking custom range volume put its value in file audio
+    customRangeVolume.oninput = ()=>{
+        audioFile.volume = +customRangeVolume.value / 100
+        volumeVal = customRangeVolume.value
+        if(customRangeVolume.value === "0"){
+            iconVolume.classList.add("fa-volume-xmark")
+            iconVolume.classList.remove("fa-volume-high")
+        }else{
+            iconVolume.classList.remove("fa-volume-xmark")
+            iconVolume.classList.add("fa-volume-high")
+        }
+
+    }
+
 
     //========= toggle play audio =========
     iconPlay.onclick = ()=>{
@@ -56,6 +100,12 @@ function create_custom_audio_range(){
 
         }
     }
+
+    const selectSpeed = document.getElementById("selectSpeed")
+    selectSpeed.onchange = ()=>{
+        audioFile.playbackRate = selectSpeed.value
+    }
+
 }
 
 window.onload=()=>{
