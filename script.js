@@ -9,8 +9,12 @@ function create_custom_audio_range(){
     const iconPlay =document.getElementById("iconPlay")
     const dur = Math.floor(audioFile.duration)
     customRngAud.max = dur
-    let min = Math.floor(dur/60)
-    let sec = dur % 60
+    function getTime(dur){
+        let min = Math.floor(dur/60)
+        let sec = dur % 60
+        return {min: min, sec: sec}
+    }
+
 
     //========= add zero to number if less than 10 =========
     function addZero(num) {
@@ -18,17 +22,25 @@ function create_custom_audio_range(){
         else {return num}
     }
 
+    //========= optimization fn putting time in html =========
+    function putTimeHTML(dur){
+        return `${addZero(getTime(+dur).min)}:${addZero(getTime(+dur).sec)}`
+    }
+
     //========= on seeking custom input range: convert its value to duration time, and put it in a span =========
     customRngAud.oninput = ()=>{
         let durRng = customRngAud.value
-        let min = Math.floor(durRng/60)
-        let sec = durRng % 60
         audioFile.currentTime = durRng
-        curTimeSpan.innerHTML= `${addZero(min)}:${addZero(sec)}/`
+        curTimeSpan.innerHTML= putTimeHTML(durRng)
         audioFile.play()
     }
+    durAudSpan.innerHTML= putTimeHTML(dur)
 
-    durAudSpan.innerHTML= `${addZero(min)}:${addZero(sec)}`
+    //========= on playing audio play custom range =========
+    audioFile.ontimeupdate = ()=>{
+        customRngAud.value = audioFile.currentTime
+        curTimeSpan.innerHTML = putTimeHTML(customRngAud.value)
+    }
 
     //========= toggle play audio =========
     iconPlay.onclick = ()=>{
