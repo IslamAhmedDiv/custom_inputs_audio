@@ -1,0 +1,98 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.custom-controllers{
+    margin: auto;
+}
+.custom-controllers i{
+    cursor: pointer;
+    font-size: 32px;
+    color: #067cec;
+}
+.custom-controllers .icon-play{
+    font-size: 34px;
+    background: #127747;
+    color: #fff;
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
+.custom-controllers .icon-play:hover{
+    background: #0c5734;
+    color: #fff;
+}
+
+.custom-controllers :where(.custom-range, .custom-range > *) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.custom-controllers .custom-range > *{
+    gap: 5px;
+}
+.custom-controllers .custom-range .span-time{
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 0 3px;
+}
+.custom-controllers .custom-range .span-time span:nth-child(1){
+    color: green;
+}
+.custom-controllers .custom-range .span-time span:nth-child(2){
+    color: #babcc2;
+    /*color: dodgerblue;*/
+}
+
+.custom-controllers .input-range {
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.custom-controllers .input-range{
+    background: linear-gradient(90deg, green 60%, dodgerblue 60%);
+}
+.custom-controllers .input-range::-webkit-slider-runnable-track{
+    background-image: inherit;
+    height: 2px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+.custom-controllers .input-range::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 25px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: white;
+    transform: translate(0, -50%);
+    box-shadow: 0 0 5px 2px green;
+}
+.custom-controllers .range-volume .input-range::-webkit-slider-thumb{
+    width: 15px;
+}
+.custom-controllers .range-volume{
+    background-color: rgba(239, 243, 242, 0.16);
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.01);
+}
+.custom-controllers .input-range::-webkit-slider-thumb:hover{
+    background: green;
+    box-shadow: 0 0 0 0 green;
+}
+
+.custom-controllers .range-audio input{
+    min-width: 400px;
+    max-width: 80%;
+}
+
+
+
+
+
+
+
+
