@@ -58,7 +58,6 @@ function create_custom_audio_range(){
         customRngAud.value = audioFile.currentTime
         curTimeSpan.innerHTML = putTimeHTML(customRngAud.value)
         progressTime(customRngAud)
-        console.log(customRngAud)
     }
 
     function progressTime(input){
@@ -68,20 +67,10 @@ function create_custom_audio_range(){
     progressTime(customRngAud)
 
     // toggle play audio key
-
-    let key = true
     document.onkeydown = function (e) {
-        if (e.key === " "=== key){
-            audioFile.play()
-            iconPlay.classList.add("fa-pause")
-            iconPlay.classList.remove("fa-play")
+        if (e.key === " "){
+            iconPlay.click()
         }
-        else{
-            audioFile.pause()
-            iconPlay.classList.remove("fa-pause")
-            iconPlay.classList.add("fa-play")
-        }
-                key = !key
     }
                     // toggle play audio
 
