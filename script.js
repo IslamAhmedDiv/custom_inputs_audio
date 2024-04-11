@@ -1,6 +1,8 @@
 
 function create_custom_audio_range(){
+
     //========= global variables =========
+
     const audioFile = document.getElementById("audioFile")
     if(!audioFile.duration){ return}
 
@@ -20,17 +22,20 @@ function create_custom_audio_range(){
 
     durAudSpan.innerHTML= putTimeHTML(dur)
     // add zero to number if less than 10
+
     function addZero(num) {
         if (num < 10){ num ="0"+ num; return num }
         else {return num}
     }
 
     // optimization fn putting time in html
+
     function putTimeHTML(dur){
         return `${addZero(getTime(+dur).min)}:${addZero(getTime(+dur).sec)}`
     }
 
     // on seeking custom input range: convert its value to duration time, and put it in a span
+
     customRngAud.oninput = ()=>{
         let durRng = customRngAud.value
         audioFile.currentTime = durRng
@@ -48,6 +53,7 @@ function create_custom_audio_range(){
 
 
     // on playing audio play custom range
+
     audioFile.ontimeupdate = ()=>{
         customRngAud.value = audioFile.currentTime
         curTimeSpan.innerHTML = putTimeHTML(customRngAud.value)
@@ -61,7 +67,24 @@ function create_custom_audio_range(){
     }
     progressTime(customRngAud)
 
-    // toggle play audio
+    // toggle play audio key
+
+    let key = true
+    document.onkeydown = function (e) {
+        if (e.key === " "=== key){
+            audioFile.play()
+            iconPlay.classList.add("fa-pause")
+            iconPlay.classList.remove("fa-play")
+        }
+        else{
+            audioFile.pause()
+            iconPlay.classList.remove("fa-pause")
+            iconPlay.classList.add("fa-play")
+        }
+                key = !key
+    }
+                    // toggle play audio
+
     const iconPlay =document.getElementById("iconPlay")
     iconPlay.onclick = ()=>{
         if (audioFile.paused === true) {
@@ -75,13 +98,16 @@ function create_custom_audio_range(){
             iconPlay.classList.remove("fa-pause")
         }
     }
+
 //==================================== END AUDIO RANGE TEMPLATE =======================================
 //=====================================================================================================
 
 
 //*****************************************************************************************************
 //************************************** VOLUME RANGE TEMPLATE ****************************************
+
     // to toggle sound
+
     const customRangeVolume = document.getElementById("customRangeVolume")
     const iconVolume =document.getElementById("iconVolume")
     let volume = true
@@ -103,6 +129,7 @@ function create_custom_audio_range(){
     }
 
     // on seeking custom range volume put its value in file audio
+
     customRangeVolume.oninput = ()=>{
         audioFile.volume = +customRangeVolume.value / 100
         volumeVal = customRangeVolume.value
